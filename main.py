@@ -29,30 +29,6 @@ except FileNotFoundError as e:
     messagebox.showerror("Error", f"Image not found: {e}")
     root.destroy()
 
-# Load and crop the background image
-try:
-    original_bg_img = Image.open("bg.jpeg")
-    # Calculate the cropping box to maintain aspect ratio
-    width, height = original_bg_img.size
-    aspect_ratio = root.winfo_screenwidth() / root.winfo_screenheight()
-    if width / height > aspect_ratio:
-        # Crop width
-        new_width = int(height * aspect_ratio)
-        left = (width - new_width) // 2
-        right = left + new_width
-        crop_box = (left, 0, right, height)
-    else:
-        # Crop height
-        new_height = int(width / aspect_ratio)
-        top = (height - new_height) // 2
-        bottom = top + new_height
-        crop_box = (0, top, width, bottom)
-    cropped_bg_img = original_bg_img.crop(crop_box)
-    bg_img = ImageTk.PhotoImage(cropped_bg_img.resize((root.winfo_screenwidth(), root.winfo_screenheight())))
-except FileNotFoundError as e:
-    messagebox.showerror("Error", f"Background image not found: {e}")
-    root.destroy()
-
 images = {1: rock_img, 2: paper_img, 3: scissors_img}
 
 # Functions
@@ -107,10 +83,6 @@ def display_menu():
     for widget in frame.winfo_children():
         widget.destroy()
 
-    # Display the background image
-    bg_label = tk.Label(frame, image=bg_img)
-    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-
     # Create a sub-frame for centering elements
     sub_frame = tk.Frame(frame, bg="#ffcccb", highlightthickness=0)
     sub_frame.place(relx=0.5, rely=0.5, anchor="center")
@@ -135,10 +107,6 @@ def display_start_page():
     for widget in frame.winfo_children():
         widget.destroy()
 
-    # Display the background image
-    bg_label = tk.Label(frame, image=bg_img)
-    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-
     # Create a sub-frame for centering elements
     sub_frame = tk.Frame(frame, bg="#ffcccb", highlightthickness=0)
     sub_frame.place(relx=0.5, rely=0.5, anchor="center")
@@ -150,7 +118,7 @@ def display_start_page():
     tk.Button(sub_frame, text="Play", command=start_game, font=("Comic Sans MS", int(root.winfo_screenwidth() * 0.02)), bg="#ffb6c1", width=button_width).pack(pady=20)
 
 # Main frame with a vibrant background color
-frame = tk.Frame(root, bg="#ffcccb")  # Light coral background
+frame = tk.Frame(root, bg="#ffcccb")  # Light pink background
 frame.pack(expand=True, fill="both")
 
 # Display start page
